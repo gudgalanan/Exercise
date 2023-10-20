@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Task } from "../data/task";
+import TaskDetail from "./TaskDetail";
 
 interface Props {
   tasks: Task[];
@@ -35,6 +36,26 @@ const TaskList = ({ tasks, setTasks }: Props) => {
     setSearchText(e.target.value);
   };
 
+  // const [showTaskDetail, setShowTaskDetail] = useState(false); // State to control the visibility of TaskDetail
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null); // Store the selected task ID
+
+  const openTaskDetail = (taskId: string) => {
+    setSelectedTaskId(taskId);
+  };
+
+  // Function to close the TaskDetail component
+  const closeTaskDetail = () => {
+    setSelectedTaskId(null);
+  };
+
+  const updateTask = (updatedTask: Task) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === updatedTask.id ? { ...task, ...updatedTask } : task
+      )
+    );
+  };
+
   return (
     <>
       <h1>To Do List</h1>
@@ -57,8 +78,19 @@ const TaskList = ({ tasks, setTasks }: Props) => {
                 onChange={() => handleSelectedTasks(task.id)}
               />
               <span>{task.title}</span>
-              <button>Detail</button>
+              <button onClick={() => openTaskDetail(task.id)}>Detail</button>
               <button onClick={() => removeTask(task.id)}>Remove</button>
+              {selectedTaskId === task.id && (
+                <div className="task-desc">
+                  <div className="task-form-container">
+                    <TaskDetail
+                      tasks={task}
+                      onUpdate={updateTask}
+                      onClose={closeTaskDetail}
+                    />
+                  </div>
+                </div>
+              )}
             </li>
           ))}
       </ul>
