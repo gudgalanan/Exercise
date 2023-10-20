@@ -1,9 +1,12 @@
 import { useState } from "react";
-import useTasks from "../hooks/useTasks";
+import { Task } from "../data/task";
 
-const TaskList = () => {
-  const { data, error } = useTasks();
-  const [tasks, setTasks] = useState(data);
+interface Props {
+  tasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+}
+
+const TaskList = ({ tasks, setTasks }: Props) => {
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
   const [searchText, setSearchText] = useState("");
 
