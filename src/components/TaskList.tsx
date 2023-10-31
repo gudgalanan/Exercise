@@ -81,15 +81,11 @@ const TaskList = ({ tasks, setTasks }: Props) => {
               <button onClick={() => openTaskDetail(task.id)}>Detail</button>
               <button onClick={() => removeTask(task.id)}>Remove</button>
               {selectedTaskId === task.id && (
-                <div className="task-desc">
-                  <div className="task-form-container">
-                    <TaskDetail
-                      tasks={task}
-                      onUpdate={updateTask}
-                      onClose={closeTaskDetail}
-                    />
-                  </div>
-                </div>
+                <TaskDetail
+                  tasks={task}
+                  onUpdate={updateTask}
+                  onClose={closeTaskDetail}
+                />
               )}
             </li>
           ))}

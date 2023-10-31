@@ -21,7 +21,6 @@ const TaskForm = ({ onAdd }: Props) => {
       priority,
       completed: false,
     };
-    console.log(newTask);
     onAdd(newTask);
   };
   return (
